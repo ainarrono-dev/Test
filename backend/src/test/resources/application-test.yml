@@ -19,3 +19,5 @@ app:
   jwt:
     secret: "dGVzdC1zZWNyZXQta2V5LWZvci10ZXN0aW5nLW11c3QtYmUtbG9uZy1lbm91Z2gtMjU2LWJpdHM="
     expiration: 86400000
+  storage:
+    upload-dir: /tmp/logimatch-test-uploads

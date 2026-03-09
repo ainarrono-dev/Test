@@ -11,7 +11,25 @@ export class OfferService {
 
   getOffers(): Observable<Offer[]> { return this.http.get<Offer[]>(this.url); }
   getOffer(id: number): Observable<Offer> { return this.http.get<Offer>(`${this.url}/${id}`); }
-  createOffer(req: OfferCreateRequest): Observable<Offer> { return this.http.post<Offer>(this.url, req); }
+
+  /**
+   * Crée une offre en multipart/form-data.
+   * La partie "data" contient le JSON de l'offre ; la partie "insurance" le fichier.
+   */
+  createOffer(req: OfferCreateRequest, insuranceFile: File): Observable<Offer> {
+    const formData = new FormData();
+    // Blob JSON typé pour que Spring puisse le désérialiser avec @RequestPart
+    const dataBlob = new Blob([JSON.stringify(req)], { type: 'application/json' });
+    formData.append('data', dataBlob);
+    formData.append('insurance', insuranceFile, insuranceFile.name);
+    return this.http.post<Offer>(this.url, formData);
+  }
+
+  /** URL de téléchargement/visualisation du document d'assurance d'une offre. */
+  getInsuranceUrl(id: number): string {
+    return `${this.url}/${id}/insurance`;
+  }
+
   closeOffer(id: number): Observable<Offer> { return this.http.post<Offer>(`${this.url}/${id}/close`, {}); }
   cancelOffer(id: number): Observable<Offer> { return this.http.post<Offer>(`${this.url}/${id}/cancel`, {}); }
 }

@@ -31,4 +31,12 @@ public class OfferTransportDetail {
 
     @Column(name = "with_driver", nullable = false)
     private boolean withDriver;
+
+    /** Chemin relatif du fichier d'assurance stocké sur le serveur. */
+    @Column(name = "insurance_file_path", length = 500)
+    private String insuranceFilePath;
+
+    /** Nom original du fichier uploadé (affiché à l'utilisateur). */
+    @Column(name = "insurance_original_name", length = 255)
+    private String insuranceOriginalName;
 }

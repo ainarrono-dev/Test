@@ -15,6 +15,9 @@ export interface Offer {
   lengthM: number | null;
   withDriver: boolean | null;
   visibilityScore: number;
+  // assurance
+  hasInsurance: boolean;
+  insuranceFileName: string | null;
 }
 
 export interface OfferCreateRequest {

@@ -16,6 +16,11 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 12MB
 
 server:
   port: 8080
@@ -24,6 +29,8 @@ app:
   jwt:
     secret: "bG9naW1hdGNoLXN1cGVyLXNlY3JldC1rZXktMjAyNi1tdXN0LWJlLWF0LWxlYXN0LTI1Ni1iaXRzLWxvbmc="
     expiration: 86400000
+  storage:
+    upload-dir: uploads
 
 logging:
   level:

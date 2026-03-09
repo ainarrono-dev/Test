@@ -18,5 +18,9 @@ public record OfferResponse(
     BigDecimal volumeM3,
     BigDecimal lengthM,
     Boolean withDriver,
-    double visibilityScore
+    double visibilityScore,
+    /** Nom original du fichier d'assurance (null si masqué ou absent). */
+    String insuranceFileName,
+    /** true si le document d'assurance a été uploadé. */
+    boolean hasInsurance
 ) {}

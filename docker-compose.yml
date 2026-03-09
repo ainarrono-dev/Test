@@ -30,6 +30,8 @@ services:
     container_name: logimatch-backend
     environment:
       SPRING_PROFILES_ACTIVE: docker
+    volumes:
+      - uploads_data:/app/uploads
     depends_on:
       postgres:
         condition: service_healthy
@@ -58,3 +60,4 @@ services:
 
 volumes:
   postgres_data:
+  uploads_data:

@@ -49,6 +49,7 @@ public class RequestService {
                 .quantityMax(req.quantityMax())
                 .quantityCommitted(0)
                 .status(TransportRequest.Status.OPEN)
+                .matchingMode(parseMatchingMode(req.matchingMode()))
                 .build();
 
         RequestTransportDetail detail = RequestTransportDetail.builder()
@@ -87,20 +88,29 @@ public class RequestService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
 
+    private TransportRequest.MatchingMode parseMatchingMode(String value) {
+        try {
+            return value != null ? TransportRequest.MatchingMode.valueOf(value.toUpperCase()) : TransportRequest.MatchingMode.SELF_SERVE;
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "matchingMode must be OUTSOURCED or SELF_SERVE");
+        }
+    }
+
     private RequestResponse toResponse(TransportRequest r, boolean maskDetails) {
         RequestTransportDetail detail = r.getTransportDetail();
         double visScore = scoringService.calculateVisibilityScore(r.getRequester());
+        String mode = r.getMatchingMode() != null ? r.getMatchingMode().name() : "SELF_SERVE";
         if (maskDetails || detail == null) {
             return new RequestResponse(r.getId(), r.getRequester().getId(),
                     r.getRequester().getCompanyName(), r.getResourceType(),
                     r.getStartDatetime(), r.getEndDatetime(), r.getQuantityMax(),
-                    r.getQuantityCommitted(), r.getStatus().name(), r.getCreatedAt(),
+                    r.getQuantityCommitted(), r.getStatus().name(), mode, r.getCreatedAt(),
                     null, null, null, visScore);
         }
         return new RequestResponse(r.getId(), r.getRequester().getId(),
                 r.getRequester().getCompanyName(), r.getResourceType(),
                 r.getStartDatetime(), r.getEndDatetime(), r.getQuantityMax(),
-                r.getQuantityCommitted(), r.getStatus().name(), r.getCreatedAt(),
+                r.getQuantityCommitted(), r.getStatus().name(), mode, r.getCreatedAt(),
                 detail.getRequiredVehicleCategory(), detail.getMinLoadTons(), detail.isWithDriver(), visScore);
     }
 }
