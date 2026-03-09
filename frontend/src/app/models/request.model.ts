@@ -1,21 +1,19 @@
-export interface RequestTransportDetail {
-  requiredVehicleCategory: string | null;
-  minLoadTons: number | null;
-  withDriver: boolean;
-}
-
 export interface TransportRequest {
   id: number;
-  requesterEmail: string;
+  requesterId: number;
   requesterCompanyName: string;
+  resourceType: string;
   startDatetime: string;
   endDatetime: string;
   quantityMax: number;
   quantityCommitted: number;
   status: 'OPEN' | 'PARTIAL' | 'FULL' | 'CLOSED';
-  transportDetail: RequestTransportDetail | null;
-  visibilityScore: number;
   createdAt: string;
+  // transport detail (null when masked)
+  requiredVehicleCategory: string | null;
+  minLoadTons: number | null;
+  withDriver: boolean | null;
+  visibilityScore: number;
 }
 
 export interface RequestCreateRequest {

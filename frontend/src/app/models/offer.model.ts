@@ -1,22 +1,20 @@
-export interface OfferTransportDetail {
-  vehicleCategory: string | null;
-  maxLoadTons: number | null;
-  volumeM3: number | null;
-  lengthM: number | null;
-  withDriver: boolean;
-}
-
 export interface Offer {
   id: number;
-  ownerEmail: string;
+  ownerId: number;
   ownerCompanyName: string;
+  resourceType: string;
   startDatetime: string;
   endDatetime: string;
   quantityAvailable: number;
   status: 'ACTIVE' | 'CLOSED' | 'CANCELLED';
-  transportDetail: OfferTransportDetail | null;
-  visibilityScore: number;
   createdAt: string;
+  // transport detail (null when masked for FREE plan)
+  vehicleCategory: string | null;
+  maxLoadTons: number | null;
+  volumeM3: number | null;
+  lengthM: number | null;
+  withDriver: boolean | null;
+  visibilityScore: number;
 }
 
 export interface OfferCreateRequest {

@@ -55,8 +55,7 @@ public class AuthService {
         user = userAccountRepository.save(user);
 
         String token = jwtTokenProvider.generateToken(user.getEmail(), List.of(user.getRole().name()));
-        return new AuthResponse(token, user.getId(), user.getEmail(), user.getRole().name(),
-                user.getCompanyName(), user.isValidated());
+        return buildResponse(token, user);
     }
 
     public AuthResponse login(LoginRequest request) {
@@ -69,7 +68,15 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Account suspended");
         }
         String token = jwtTokenProvider.generateToken(user.getEmail(), List.of(user.getRole().name()));
-        return new AuthResponse(token, user.getId(), user.getEmail(), user.getRole().name(),
-                user.getCompanyName(), user.isValidated());
+        return buildResponse(token, user);
+    }
+
+    private AuthResponse buildResponse(String token, UserAccount user) {
+        String planName = user.getSubscriptionPlan() != null ? user.getSubscriptionPlan().getName() : null;
+        AuthResponse.UserInfo userInfo = new AuthResponse.UserInfo(
+                user.getId(), user.getEmail(), user.getRole().name(),
+                user.getCompanyName(), user.isValidated(), user.isSuspended(),
+                user.getReliabilityScore(), planName);
+        return new AuthResponse(token, userInfo);
     }
 }

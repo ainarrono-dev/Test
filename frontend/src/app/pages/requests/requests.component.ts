@@ -92,8 +92,8 @@ import { CommonModule } from '@angular/common';
             <ng-container matColumnDef="detail">
               <th mat-header-cell *matHeaderCellDef>Véhicule / Charge</th>
               <td mat-cell *matCellDef="let r" [class.blurred]="auth.isPlanFree()">
-                <span *ngIf="!auth.isPlanFree() && r.transportDetail">
-                  {{ r.transportDetail?.requiredVehicleCategory }} — min {{ r.transportDetail?.minLoadTons }}t
+                <span *ngIf="!auth.isPlanFree() && r.requiredVehicleCategory">
+                  {{ r.requiredVehicleCategory }} — min {{ r.minLoadTons }}t
                 </span>
                 <span *ngIf="auth.isPlanFree()">████████</span>
               </td>
