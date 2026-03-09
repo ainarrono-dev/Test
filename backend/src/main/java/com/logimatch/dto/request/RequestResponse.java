@@ -13,6 +13,8 @@ public record RequestResponse(
     int quantityMax,
     int quantityCommitted,
     String status,
+    /** OUTSOURCED ou SELF_SERVE */
+    String matchingMode,
     LocalDateTime createdAt,
     String requiredVehicleCategory,
     BigDecimal minLoadTons,

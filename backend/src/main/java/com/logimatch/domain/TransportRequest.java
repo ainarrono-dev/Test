@@ -11,6 +11,13 @@ public class TransportRequest {
 
     public enum Status { OPEN, PARTIAL, FULL, CLOSED }
 
+    public enum MatchingMode {
+        /** L'admin recherche et affecte la bonne offre pour l'utilisateur. */
+        OUTSOURCED,
+        /** Le système affiche les offres compatibles ; l'utilisateur sélectionne lui-même. */
+        SELF_SERVE
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,6 +45,10 @@ public class TransportRequest {
     @Column(nullable = false, length = 20)
     private Status status;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "matching_mode", nullable = false, length = 20)
+    private MatchingMode matchingMode;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
@@ -48,6 +59,7 @@ public class TransportRequest {
     protected void onCreate() {
         if (createdAt == null) createdAt = LocalDateTime.now();
         if (status == null) status = Status.OPEN;
+        if (matchingMode == null) matchingMode = MatchingMode.SELF_SERVE;
         if (resourceType == null) resourceType = "TRANSPORT";
     }
 }

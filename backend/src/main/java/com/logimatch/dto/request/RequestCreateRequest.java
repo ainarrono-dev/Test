@@ -12,5 +12,7 @@ public record RequestCreateRequest(
     @Min(1) int quantityMax,
     String requiredVehicleCategory,
     BigDecimal minLoadTons,
-    boolean withDriver
+    boolean withDriver,
+    /** OUTSOURCED = l'admin trouve l'offre | SELF_SERVE = l'utilisateur choisit parmi les offres compatibles */
+    @NotNull String matchingMode
 ) {}
