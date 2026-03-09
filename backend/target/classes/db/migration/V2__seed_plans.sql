@@ -9,7 +9,7 @@ VALUES (
     'ADMIN',
     'LogiMatch Admin',
     'admin@logimatch.com',
-    '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LkTpkihHu.i',
+    '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LkTpkihHu.i', -- BCrypt of "admin123" (dev only)
     TRUE,
     FALSE,
     100,
